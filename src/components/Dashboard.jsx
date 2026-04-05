@@ -13,42 +13,74 @@ import { CostChart } from './CostChart'
 import Pacman from '../assets/pacman_bg.jpg'
 import { motion } from "framer-motion"
 import { useState } from "react"
+import { MonitoringContent } from './MonitoringContent'
+import { InventoryContent } from './InventoryContent'
+import { UtilizationContent } from './UtilizationContent'
+import { CostContent } from './CostContent'
+import { ComplianceContent } from './ComplianceContent'
+import { StorageContent } from './StorageContent'
 
 /* ------------------ COMMON COMPONENTS ------------------ */
 
 function CardTitle({ icon: Icon, children }) {
   return (
-    <div className="mb-4 flex items-center gap-2 border-b border-gray-100 pb-3">
-      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600">
-        <Icon className="h-4 w-4" strokeWidth={2} />
+    <div className="mb-4 flex flex-col items-center justify-center border-b border-gray-100 pb-3 pt-2">
+      
+      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-[#777777] mb-1">
+        <Icon className="h-5 w-5" strokeWidth={2} />
       </span>
-      <span className="text-sm font-bold tracking-wide text-gray-800">
+
+      <span className="text-base font-semibold tracking-wide text-[#777777]">
         {children}
       </span>
+
     </div>
   )
 }
 
-/* ------------------ ANIMATED GRID ------------------ */
+
+
 
 function AnimatedGrid() {
   const [active, setActive] = useState("COST")
 
-  const columns = [
-    [
-      { title: "COST", icon: DollarSign, content: <CostChart /> },
-      { title: "MONITORING", icon: Activity },
-    ],
-    [
-      { title: "INVENTORY", icon: Cloud },
-      { title: "UTILIZATION", icon: PieChart },
-    ],
-    [
-      { title: "COMPLIANCE", icon: Check },
-      { title: "STORAGE", icon: Database },
-    ],
-  ]
-
+const columns = [
+  [
+    {
+      title: "COST",
+      icon: DollarSign,
+      defaultContent: <CostContent />,
+      activeContent: <div>Cost Detailed View</div>, // later replace
+    },
+    {
+      title: "MONITORING",
+      icon: Activity,
+      defaultContent: <MonitoringContent />,
+      activeContent: <div>Monitoring Detailed View</div>,
+    },
+  ],
+  [
+    {
+      title: "INVENTORY",
+      icon: Cloud,
+      defaultContent: <InventoryContent />,
+      activeContent: <div>Inventory Detailed View</div>,
+    },
+    {
+      title: "UTILIZATION",
+      icon: PieChart,
+      defaultContent: <UtilizationContent />,
+      activeContent: <div>Utilization Detailed View</div>,
+    },
+  ],
+  [
+    { title: "COMPLIANCE", icon: Check ,
+       defaultContent: <ComplianceContent />,
+      activeContent: <div>Compliance Detailed View</div>,
+    },
+    { title: "STORAGE", icon: Database, defaultContent: <StorageContent />, activeContent: <div>Storage Detailed View</div> },
+  ],
+]
   const isColumnActive = (col) =>
     col.some((card) => card.title === active)
 
@@ -79,7 +111,7 @@ const getHeights = (col, title) => {
         ${activeCol ? "w-[38%]" : "w-[31%]"}
       `}
     >
-      {col.map(({ title, icon, content }) => (
+      {col.map(({ title, icon, defaultContent, activeContent }) => (
         <motion.div
           key={title}
           layout
@@ -91,7 +123,9 @@ const getHeights = (col, title) => {
         >
           <CardTitle icon={icon}>{title}</CardTitle>
 
-          {active === title && content}
+    {active === title
+  ? activeContent || defaultContent
+  : defaultContent}
         </motion.div>
       ))}
     </motion.div>
