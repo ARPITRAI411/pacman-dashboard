@@ -13,18 +13,19 @@ import {
 import Pacman from "../assets/pacman_bg.jpg"
 import { motion } from "framer-motion"
 import logo from '../assets/logo_pacman.svg'
-import { MonitoringContent } from "./MonitoringContent"
-import { InventoryContent } from "./InventoryContent"
-import { UtilizationContent } from "./UtilizationContent"
-import { CostContent } from "./CostContent"
-import { ComplianceContent } from "./ComplianceContent"
-import { StorageContent } from "./StorageContent"
+import { MonitoringContent,DetailedMonitoringContent } from "./MonitoringContent"
+import { InventoryContent ,DetailedInventoryContent } from "./InventoryContent"
+import { UtilizationContent,DetailedUtilizationContent } from "./UtilizationContent"
+import { CostContent,DetailedCostContent } from "./CostContent"
+import { ComplianceContent,DetailedComplianceContent} from "./ComplianceContent"
+import { StorageContent,DetailedStorageContent } from "./StorageContent"
+
 
 /* ------------------ COMMON COMPONENTS ------------------ */
 
 function CardTitle({ icon: Icon, children }) {
   return (
-    <div className="mb-4 flex gap-2 items-center justify-center pb-3 pt-2">
+    <div className="mb-4 flex gap-2 items-center  justify-center pb-3 pt-2">
       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-[#777777]">
         <Icon className="h-5 w-5" />
       </span>
@@ -47,13 +48,13 @@ function AnimatedGrid() {
         title: "COST",
         icon: DollarSign,
         defaultContent: <CostContent />,
-        activeContent: <div>Cost Detailed View</div>,
+        activeContent: <DetailedCostContent />,
       },
       {
         title: "MONITORING",
         icon: Activity,
         defaultContent: <MonitoringContent />,
-        activeContent: <div>Monitoring Detailed View</div>,
+        activeContent:  <DetailedMonitoringContent />,
       },
     ],
     [
@@ -61,13 +62,13 @@ function AnimatedGrid() {
         title: "INVENTORY",
         icon: Cloud,
         defaultContent: <InventoryContent />,
-        activeContent: <div>Inventory Detailed View</div>,
+        activeContent: <DetailedInventoryContent />,
       },
       {
         title: "UTILIZATION",
         icon: PieChart,
         defaultContent: <UtilizationContent />,
-        activeContent: <div>Utilization Detailed View</div>,
+        activeContent: <DetailedUtilizationContent />,
       },
     ],
     [
@@ -75,13 +76,13 @@ function AnimatedGrid() {
         title: "COMPLIANCE",
         icon: Check,
         defaultContent: <ComplianceContent />,
-        activeContent: <div>Compliance Detailed View</div>,
+        activeContent: <DetailedComplianceContent />,
       },
       {
         title: "STORAGE",
         icon: Database,
         defaultContent: <StorageContent />,
-        activeContent: <div>Storage Detailed View</div>,
+        activeContent: <DetailedStorageContent />,
       },
     ],
   ]
@@ -89,9 +90,9 @@ function AnimatedGrid() {
   const getHeights = (col, title) => {
     const isActiveCol = col.some((c) => c.title === active)
 
-    if (!isActiveCol) return "h-[260px]  "
+    if (!isActiveCol) return "h-[270px]  "
 
-    return active === title ? "h-[420px]" : "h-[100px]"
+    return active === title ? "h-[450px]" : "h-[90px]"
   }
 
   return (
@@ -101,7 +102,7 @@ function AnimatedGrid() {
           key={colIndex}
           layout
           className={`flex flex-col gap-2 transition-all duration-300
-            ${col.some((c) => c.title === active) ? "w-[48.5%]" : "w-[25%]"}
+            ${col.some((c) => c.title === active) ? "w-[52%]" : "w-[23%]"}
           `}
         >
           {col.map(({ title, icon, defaultContent, activeContent }) => {
@@ -186,7 +187,7 @@ export function Dashboard() {
   <div className="flex items-center gap-3">
     <button className="relative rounded p-2 hover:bg-white/10">
       <Bell className="h-5 w-5" />
-      <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#E91E63]" />
+      <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-accent" />
     </button>
 
     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black">
@@ -197,9 +198,9 @@ export function Dashboard() {
 </header>
 
       {/* SUB HEADER */}
-      <div className="mt-16 ml-20 flex w-[89%] items-center justify-between pl-4 bg-white h-12">
+      <div className="mt-6 ml-20 flex w-[89%] items-center justify-between pl-4 bg-white h-12">
         <div className="flex items-center gap-2">
-          <Filter className="h-5 w-5 text-[#E91E63]" />
+          <Filter className="h-5 w-5 text-accent" />
           <span className="text-sm font-bold text-[#1a1a1a]">
             ALL APPLICATIONS
           </span>
@@ -210,9 +211,9 @@ export function Dashboard() {
             <span className="text-gray-600 font-medium">
               APPLICATION STATUS :
             </span>
-            <span className="text-[#E91E63] font-bold">43 PRODUCTION</span>
-            <span className="text-[#E91E63] font-bold">7 BUILD</span>
-            <span className="text-[#E91E63] font-bold">5 INTAKE</span>
+            <span className="text-accent font-bold">43 PRODUCTION</span>
+            <span className="text-accent font-bold">7 BUILD</span>
+            <span className="text-accent font-bold">5 INTAKE</span>
           </div>
 
           <div className="flex items-center gap-2 bg-[#2e2e2e] px-4 py-4 text-xs font-bold w-30 ml-10 text-white">
