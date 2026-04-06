@@ -1,8 +1,19 @@
-export function StorageContent() {
+export function StorageContent({ compact }) {
+  if (compact) {
+    return (
+      <div className="flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-[#E91E63]">4.15</h1>
+        <p className="text-xs text-[#E91E63]">PB</p>
+      </div>
+    )
+  }
+
   return (
     <div className="text-center">
-      <h1 className="text-4xl font-bold text-[#E91E63]">4.15</h1>
-      <p className="text-sm text-[#E91E63]">PB In Use</p>
+      <div className="flex w-[40%] justify-center gap-0.5 mx-auto mb-2">
+        <h1 className="text-4xl font-bold text-[#E91E63]">4.15</h1>
+        <p className="text-sm text-[#E91E63]">PB In Use</p>
+      </div>
 
       <div className="flex justify-around mt-8 text-sm">
         <div>
