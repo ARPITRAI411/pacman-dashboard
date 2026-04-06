@@ -1,8 +1,19 @@
-export function ComplianceContent() {
+export function ComplianceContent({ compact }) {
+  if (compact) {
+    return (
+      <div className="flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-[#E91E63]">99.82%</h1>
+        <p className="text-xs text-[#E91E63]">Compliance</p>
+      </div>
+    )
+  }
+
   return (
     <div className="text-center">
-      <h1 className="text-4xl font-bold text-[#E91E63]">99.82%</h1>
-      <p className="text-sm text-[#E91E63]">Compliance All Apps</p>
+      <div className="flex w-[40%] justify-center gap-0.5 mx-auto mb-2">
+        <h1 className="text-4xl font-bold text-[#E91E63]">99.82%</h1>
+        <p className="text-sm text-[#E91E63]">Compliance All Apps</p>
+      </div>
 
       <p className="mt-2 text-gray-600">
         <span className="font-bold text-black">58</span> Rules

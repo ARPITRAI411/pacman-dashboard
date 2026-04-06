@@ -1,8 +1,19 @@
-export function InventoryContent() {
+export function InventoryContent({ compact }) {
+  if (compact) {
+    return (
+      <div className="flex items-center gap-3">
+        <h1 className="text-2xl font-bold text-[#E91E63]">6.5K</h1>
+        <p className="text-xs text-[#E91E63]">instances</p>
+      </div>
+    )
+  }
+
   return (
     <div className="text-center">
-      <h1 className="text-4xl font-bold text-[#E91E63]">6.5K</h1>
-      <p className="text-sm text-gray-500">current instances</p>
+      <div className="flex w-[40%] justify-center gap-0.5 mx-auto mb-2">
+        <h1 className="text-4xl font-bold text-[#E91E63]">6.5K</h1>
+        <p className="text-sm text-[#E91E63]">current instances</p>
+      </div>
 
       <p className="mt-2 text-gray-600">
         <span className="font-bold">25.0K</span> Unique Last 30 days
