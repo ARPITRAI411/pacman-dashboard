@@ -62,68 +62,97 @@ export function DetailedComplianceContent() {
   ]
 
   return (
-    <div className="flex flex-col h-full px-6 pt-4">
+    <div className="flex flex-col h-full px-6 pt-4 pb-6 justify-between">
 
       {/* MAIN */}
       <div className="flex items-center justify-center">
 
-        {/* LEFT TEXT */}
+        {/* LEFT CONTENT */}
         <div className="text-right mr-6">
           <p className="text-accent text-sm">All Apps</p>
-          <h1 className="text-3xl font-bold text-accent">
+
+          <h1 className="text-[34px] font-bold text-accent leading-none">
             99.82<span className="text-lg">%</span>
           </h1>
 
           <div className="mt-4 space-y-1 text-xs text-gray-700">
             {data.map((item, i) => (
               <div key={i} className="flex justify-end gap-3">
-                <span>{item.name}</span>
+                <span className="tracking-wide">{item.name}</span>
                 <span>{item.value}%</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* RIGHT CHART */}
-        <div className="w-[180px] h-[180px]">
+        {/* RIGHT MULTI-RING CHART */}
+        <div className="w-[220px] h-[220px] relative overflow-hidden">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
-              <Pie
-                data={data}
-                dataKey="value"
-                startAngle={180}
-                endAngle={0}
-                innerRadius={40}
-                outerRadius={90}
-                paddingAngle={2}
-              >
-                {data.map((entry, index) => (
-                  <Cell key={index} fill={colors[index]} />
-                ))}
-              </Pie>
-            </PieChart>
+
+  {/* Background rings (perfect semicircle right side) */}
+  {data.map((_, i) => (
+    <Pie
+      key={`bg-${i}`}
+      data={[{ value: 100 }]}
+      dataKey="value"
+      startAngle={90}
+      endAngle={-90}
+      cx="50%"
+      cy="50%"
+      innerRadius={35 + i * 14}
+      outerRadius={45 + i * 14}
+      isAnimationActive={false}
+    >
+      <Cell fill="#eeeeee" />
+    </Pie>
+  ))}
+
+  {/* Foreground rings (pink exact direction) */}
+  {data.map((entry, i) => (
+    <Pie
+      key={`fg-${i}`}
+      data={[entry]}
+      dataKey="value"
+      startAngle={90}
+      endAngle={90 - (entry.value / 100) * 180}
+      cx="50%"
+      cy="50%"
+      innerRadius={35 + i * 14}
+      outerRadius={45 + i * 14}
+      cornerRadius={6}
+      isAnimationActive={false}
+    >
+      <Cell fill={colors[i]} />
+    </Pie>
+  ))}
+
+</PieChart>
           </ResponsiveContainer>
         </div>
+
       </div>
 
-      {/* BOTTOM STATS */}
+      {/* BOTTOM */}
       <div className="flex justify-between mt-auto pt-6 text-center">
+
         <div>
-          <h1 className="text-2xl font-bold text-accent">200,000</h1>
+          <h1 className="text-[26px] font-bold text-accent">200,000</h1>
           <p className="text-sm text-gray-500">Scanned</p>
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold text-accent">25</h1>
+          <h1 className="text-[26px] font-bold text-accent">25</h1>
           <p className="text-sm text-gray-500">Issues Found</p>
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold text-accent">
+          <h1 className="text-[26px] font-bold text-accent">
             0.001<span className="text-sm">%</span>
           </h1>
           <p className="text-sm text-gray-500">Items with issues</p>
         </div>
+
       </div>
 
     </div>

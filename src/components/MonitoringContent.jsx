@@ -18,7 +18,7 @@ export function MonitoringContent({ compact }) {
         </p>
 
         <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-bold text-accent">3.4M</h1>
+          <h1 className="text-3xl font-bold text-accent">3.4M</h1>
           <p className="text-xs text-accent leading-tight">
             Requests <br /> Last 5 hours 30 minutes
           </p>
@@ -89,8 +89,8 @@ export function DetailedMonitoringContent({ compact }) {
     {/* DOT GRID */}
     <div className="grid grid-cols-9 gap-6 justify-items-center mt-3 px-10">
       {Array.from({ length: totalDots }).map((_, i) => {
-        let color = "bg-[#65B741]" // softer green like image 2
-        let ring = "border-[#65B741]"
+        let color = "bg-[#70C530]" // softer green like image 2
+        let ring = "border-[#70C530]"
 
         if (i === 5) {
           color = "bg-red-500"
@@ -106,9 +106,9 @@ export function DetailedMonitoringContent({ compact }) {
           <div key={i} className="relative flex items-center justify-center">
 
             {/* outer soft rings */}
-            <div className={`absolute w-10 h-10 rounded-full border ${ring} opacity-20`} />
-            <div className={`absolute w-8 h-8 rounded-full border ${ring} opacity-30`} />
-            <div className={`absolute w-6 h-6 rounded-full border ${ring} opacity-40`} />
+            <div className={`absolute w-10 h-10 rounded-full border ${ring} opacity-50`} />
+            <div className={`absolute w-8 h-8 rounded-full border ${ring} opacity-50`} />
+            <div className={`absolute w-6 h-6 rounded-full border ${ring} opacity-50`} />
 
             {/* center dot */}
             <div className={`w-5 h-5 rounded-full ${color}`} />
@@ -119,9 +119,9 @@ export function DetailedMonitoringContent({ compact }) {
     </div>
 
     {/* BOTTOM INFO */}
-    <div className="mt-auto px-4 pt-3">
+    <div className="mt-auto px-4 pt-10">
       <div className="flex items-center gap-1">
-        <h1 className="text-[32px] font-extrabold text-accent ">
+        <h1 className="text-[32px] font-bold text-accent ">
           3.4M
         </h1>
         <p className="text-sm text-accent leading-tight">
@@ -129,7 +129,7 @@ export function DetailedMonitoringContent({ compact }) {
         </p>
       </div>
 
-      <p className="text-gray-600 mt-2 text-sm">
+      <p className="text-gray-600  text-sm">
         <span className="font-semibold">3,412</span> Unique Visitors
       </p>
     </div>

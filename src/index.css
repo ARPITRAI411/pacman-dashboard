@@ -3,7 +3,7 @@
 
 /* ✅ Fix Tailwind default font */
 @theme {
---color-accent: #D20989;   /* primary pink */
+--color-accent: #ED0295;   /* primary pink */
   --color-muted: #BDBDBD;   /* gray */
   --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
 }

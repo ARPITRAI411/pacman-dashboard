@@ -90,19 +90,19 @@ function AnimatedGrid() {
   const getHeights = (col, title) => {
     const isActiveCol = col.some((c) => c.title === active)
 
-    if (!isActiveCol) return "h-[270px]  "
+    if (!isActiveCol) return "h-[280px]  "
 
-    return active === title ? "h-[450px]" : "h-[90px]"
+    return active === title ? "h-[470px]" : "h-[90px]"
   }
 
   return (
-    <div className="flex gap-2 w-full">
+    <div className="flex gap-3 w-full">
       {columns.map((col, colIndex) => (
         <motion.div
           key={colIndex}
           layout
-          className={`flex flex-col gap-2 transition-all duration-300
-            ${col.some((c) => c.title === active) ? "w-[52%]" : "w-[23%]"}
+          className={`flex flex-col gap-3 transition-all duration-300
+            ${col.some((c) => c.title === active) ? "w-[50%]" : "w-[25%]"}
           `}
         >
           {col.map(({ title, icon, defaultContent, activeContent }) => {
