@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts"
 export function ComplianceContent({ compact }) {
   if (compact) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center ">
            <p className="mt-2 text-gray-600">
         <span className="font-bold text-black">58</span> Rules |
       </p>
@@ -44,117 +44,117 @@ export function ComplianceContent({ compact }) {
 
 export function DetailedComplianceContent() {
   const data = [
-    { name: "SECURITY", value: 28 },
-    { name: "TAGGING", value: 50 },
-    { name: "CERTIFICATES", value: 65 },
-    { name: "PATCHING", value: 75 },
-    { name: "SOX", value: 60 },
-    { name: "CLOUD OP", value: 25 },
-  ]
+    { label: "SECURITY", value: 28, color: "#ff2f92" },
+    { label: "TAGGING", value: 50, color: "#ff1f8a" },
+    { label: "CERTIFICATES", value: 65, color: "#ff0f82" },
+    { label: "PATCHING", value: 75, color: "#e60073" },
+    { label: "SOX", value: 60, color: "#cc0066" },
+    { label: "CLOUD OP", value: 25, color: "#99004d" },
+  ];
 
-  const colors = [
-    "#ff0a78",
-    "#ff0a78",
-    "#ff0a78",
-    "#d6005f",
-    "#b0004c",
-    "#8a003c",
-  ]
+  const radiusStart = 90;
+  const gap = 14;
+
+  const polarToCartesian = (cx, cy, r, angle) => {
+    const rad = (angle * Math.PI) / 180;
+    return {
+      x: cx + r * Math.cos(rad),
+      y: cy + r * Math.sin(rad),
+    };
+  };
+
+  const describeArc = (r, value) => {
+    const startAngle = -90;
+    const endAngle = startAngle + (value / 100) * 180;
+
+    const start = polarToCartesian(150, 150, r, startAngle);
+    const end = polarToCartesian(150, 150, r, endAngle);
+
+    return `
+      M ${start.x} ${start.y}
+      A ${r} ${r} 0 0 1 ${end.x} ${end.y}
+    `;
+  };
 
   return (
-    <div className="flex flex-col h-full px-6 pt-4 pb-6 justify-between">
+    <div className="p-8 rounded-xl w-fullt ">
+      
+  
+    
 
-      {/* MAIN */}
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center gap-2">
+        
+        {/* LEFT */}
+       
+<div className="w-[45%] pr-2">
+  <div className="mb-2">
+    <span className="text-pink-600 text-sm">All Apps</span>
+    <h1 className="text-3xl font-bold text-pink-600 inline ml-2">
+      99.82%
+    </h1>
+  </div>
 
-        {/* LEFT CONTENT */}
-        <div className="text-right mr-6">
-          <p className="text-accent text-sm">All Apps</p>
+  <div className="space-y-1 text-sm text-gray-700">
+    {data.map((item) => (
+      <div key={item.label} className="flex justify-between w-40">
+        <span>{item.label}</span>
+        <span>{item.value}%</span>
+      </div>
+    ))}
+  </div>
+</div>
 
-          <h1 className="text-[34px] font-bold text-accent leading-none">
-            99.82<span className="text-lg">%</span>
-          </h1>
+{/* RIGHT SVG CHART */}
 
-          <div className="mt-4 space-y-1 text-xs text-gray-700">
-            {data.map((item, i) => (
-              <div key={i} className="flex justify-end gap-3">
-                <span className="tracking-wide">{item.name}</span>
-                <span>{item.value}%</span>
-              </div>
+
+        {/* RIGHT SVG CHART */}
+    <div className="w-[55%] flex justify-start -ml-6">
+  <svg width="300" height="300" viewBox="0 0 300 300">
+            
+            {/* Background arcs */}
+            {data.map((_, i) => (
+              <path
+                key={i}
+                d={describeArc(radiusStart - i * gap, 100)}
+                stroke="#e5e5e5"
+                strokeWidth="12"
+                fill="none"
+              />
             ))}
-          </div>
+
+            {/* Colored arcs */}
+            {data.map((item, i) => (
+              <path
+                key={i}
+                d={describeArc(radiusStart - i * gap, item.value)}
+                stroke={item.color}
+                strokeWidth="12"
+                fill="none"
+                strokeLinecap="butt"
+              />
+            ))}
+
+          </svg>
         </div>
-
-        {/* RIGHT MULTI-RING CHART */}
-        <div className="w-[220px] h-[220px] relative overflow-hidden">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-
-  {/* Background rings (perfect semicircle right side) */}
-  {data.map((_, i) => (
-    <Pie
-      key={`bg-${i}`}
-      data={[{ value: 100 }]}
-      dataKey="value"
-      startAngle={90}
-      endAngle={-90}
-      cx="50%"
-      cy="50%"
-      innerRadius={35 + i * 14}
-      outerRadius={45 + i * 14}
-      isAnimationActive={false}
-    >
-      <Cell fill="#eeeeee" />
-    </Pie>
-  ))}
-
-  {/* Foreground rings (pink exact direction) */}
-  {data.map((entry, i) => (
-    <Pie
-      key={`fg-${i}`}
-      data={[entry]}
-      dataKey="value"
-      startAngle={90}
-      endAngle={90 - (entry.value / 100) * 180}
-      cx="50%"
-      cy="50%"
-      innerRadius={35 + i * 14}
-      outerRadius={45 + i * 14}
-      cornerRadius={6}
-      isAnimationActive={false}
-    >
-      <Cell fill={colors[i]} />
-    </Pie>
-  ))}
-
-</PieChart>
-          </ResponsiveContainer>
-        </div>
-
       </div>
 
       {/* BOTTOM */}
-      <div className="flex justify-between mt-auto pt-6 text-center">
-
+      <div className="flex justify-around mt-8 text-center">
         <div>
-          <h1 className="text-[26px] font-bold text-accent">200,000</h1>
-          <p className="text-sm text-gray-500">Scanned</p>
+          <h1 className="text-2xl font-bold text-pink-600">200,000</h1>
+          <p className="text-gray-600 text-sm">Scanned</p>
         </div>
 
         <div>
-          <h1 className="text-[26px] font-bold text-accent">25</h1>
-          <p className="text-sm text-gray-500">Issues Found</p>
+          <h1 className="text-2xl font-bold text-pink-600">25</h1>
+          <p className="text-gray-600 text-sm">Issues Found</p>
         </div>
 
         <div>
-          <h1 className="text-[26px] font-bold text-accent">
-            0.001<span className="text-sm">%</span>
-          </h1>
-          <p className="text-sm text-gray-500">Items with issues</p>
+          <h1 className="text-2xl font-bold text-pink-600">0.001%</h1>
+          <p className="text-gray-600 text-sm">Items with issues</p>
         </div>
-
       </div>
-
     </div>
-  )
+  );
 }

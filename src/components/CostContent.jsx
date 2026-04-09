@@ -38,13 +38,17 @@ export function CostContent({ compact }) {
 
 export function DetailedCostContent() {
   const data = [
-    { name: "JUN", actual: 700, projected: 500, runRate: 0.5 },
-    { name: "JUL", actual: 500, projected: 600, runRate: 0.4 },
-    { name: "AUG", actual: 600, projected: 750, runRate: 0.45 },
-    { name: "SEP", actual: 300, projected: 620, runRate: 0.35 },
-    { name: "OCT", actual: 0, projected: 520, runRate: 0.3 },
-    { name: "NOV", actual: 0, projected: 650, runRate: 0.4 },
-  ]
+  { name: "FEB", actual: 900, projected: 600, runRate: 0.45 },
+  { name: "MAR", actual: 700, projected: 300, runRate: 0.25 },
+  { name: "APR", actual: 500, projected: 600, runRate: 0.3 },
+  { name: "MAY", actual: 900, projected: 720, runRate: 0.4 },
+  { name: "JUN", actual: 700, projected: 500, runRate: 0.35 },
+  { name: "JUL", actual: 500, projected: 600, runRate: 0.32 },
+  { name: "AUG", actual: 550, projected: 750, runRate: 0.38 },
+  { name: "SEP", actual: 300, projected: 900, runRate: 0.28 },
+  { name: "OCT", actual: 0, projected: 920, runRate: 0.25 },
+  { name: "NOV", actual: 0, projected: 900, runRate: 0.35 },
+]
 
   return (
     <div className="flex flex-col h-full px-6 pt-4 pb-6">
@@ -112,7 +116,7 @@ export function DetailedCostContent() {
               dataKey="actual"
               fill="#ff0a78"
             
-              barSize={20}
+              barSize={16}
             />
 
             <Bar
@@ -120,9 +124,16 @@ export function DetailedCostContent() {
               dataKey="projected"
               fill="#d1d5db"
            
-              barSize={20}
+              barSize={16}
             />
-
+<Line
+  yAxisId="right"
+  type="monotone"
+  dataKey="runRate"
+  stroke="#ff0a78"
+  dot={false}
+  strokeWidth={2}
+/>
             {/* DOTTED RUN RATE LINE */}
             <Line
               yAxisId="right"
@@ -139,10 +150,10 @@ export function DetailedCostContent() {
       </div>
 
       {/* LEGEND */}
-      <div className="flex justify-between items-center mt-4 text-xs text-gray-500">
+      <div className="flex w-130 ml-10 justify-between  items-center mt-4 text-xs text-gray-500">
 
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-pink-600"></div>
+          <div className="w-2 h-3 bg-pink-600"></div>
           <span>ACTUAL COST</span>
         </div>
 
@@ -164,8 +175,8 @@ export function DetailedCostContent() {
       </div>
 
       {/* BOTTOM VALUE */}
-      <div className="mt-6">
-        <h1 className="text-[42px] font-bold text-[#ff0a78] leading-none">
+      <div className="mt-13 mr-10">
+        <h1 className="text-[30px] font-bold text-[#ff0a78] leading-none">
           $24.0K
           <span className="text-sm ml-2 font-medium text-gray-500">
             /Day Run Rate
