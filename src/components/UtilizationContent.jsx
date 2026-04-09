@@ -146,7 +146,7 @@ export function DetailedUtilizationContent() {
 
       {/* Bottom */}
       <div className="mt-6">
-        <h1 className="text-[30px] font-semibold text-[#E91E63] leading-none">
+        <h1 className="text-[30px] font-bold text-[#E91E63] leading-none">
           39<span className="text-lg align-top">%</span>
           <span className="text-sm font-medium text-[#E91E63] ml-2">
             Overall

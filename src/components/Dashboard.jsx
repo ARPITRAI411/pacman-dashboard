@@ -1,7 +1,6 @@
 import React, { useState, cloneElement } from "react"
 import {
-  Menu,
-  Bell,
+  
   Filter,
   DollarSign,
   Cloud,
@@ -12,13 +11,13 @@ import {
 } from "lucide-react"
 import Pacman from "../assets/pacman_bg.jpg"
 import { motion } from "framer-motion"
-import logo from '../assets/logo_pacman.svg'
 import { MonitoringContent,DetailedMonitoringContent } from "./MonitoringContent"
 import { InventoryContent ,DetailedInventoryContent } from "./InventoryContent"
 import { UtilizationContent,DetailedUtilizationContent } from "./UtilizationContent"
 import { CostContent,DetailedCostContent } from "./CostContent"
 import { ComplianceContent,DetailedComplianceContent} from "./ComplianceContent"
 import { StorageContent,DetailedStorageContent } from "./StorageContent"
+import {useNavigate} from 'react-router-dom'
 
 
 /* ------------------ COMMON COMPONENTS ------------------ */
@@ -41,7 +40,15 @@ function CardTitle({ icon: Icon, children }) {
 
 function AnimatedGrid() {
   const [active, setActive] = useState("COST")
-
+const navigate = useNavigate()
+const routes = {
+  COST: "/cost-details",
+  MONITORING: "/monitoring-details",
+  INVENTORY: "/inventory-details",
+    UTILIZATION: "/utilization-details",
+      COMPLIANCE: "/compliance-details",
+      STORAGE: "/storage-details",
+}
   const columns = [
     [
       {
@@ -96,63 +103,69 @@ function AnimatedGrid() {
   }
 
   return (
-    <div className="flex gap-3 w-full">
-      {columns.map((col, colIndex) => (
-        <motion.div
-          key={colIndex}
-          layout
-          className={`flex flex-col gap-3 transition-all duration-300
-            ${col.some((c) => c.title === active) ? "w-[50%]" : "w-[25%]"}
-          `}
-        >
-          {col.map(({ title, icon, defaultContent, activeContent }) => {
-            const isCompact =
-              active !== title && col.some((c) => c.title === active)
+    <>
+  <div className="flex gap-3 w-full">
+    {columns.map((col, colIndex) => (
+      <motion.div
+        key={colIndex}
+        layout
+        className={`flex flex-col gap-3 transition-all duration-300
+          ${col.some((c) => c.title === active) ? "w-[50%]" : "w-[25%]"}
+        `}
+      >
+        
+        {col.map(({ title, icon, defaultContent, activeContent }) => {
+          const isCompact =
+            active !== title && col.some((c) => c.title === active)
 
-            const Icon = icon
+          const Icon = icon
 
-            return (
-              <motion.div
-                key={title}
-                layout
-                onClick={() => setActive(title)}
-                className={`cursor-pointer bg-white p-5 border border-gray-200 overflow-hidden 
-                  ${getHeights(col, title)}
-                `}
-              >
-                {isCompact ? (
-                  // 🔥 COMPACT HEADER VIEW
-                  <div className="flex items-center justify-between h-full px-2">
-                    
-                    {/* LEFT */}
-                    <div className="flex items-center gap-2">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-[#777777]">
-                        <Icon className="h-4 w-4" />
-                      </span>
-                      <span className="text-sm font-semibold text-[#777777]">
-                        {title}
-                      </span>
-                    </div>
-
-                    {/* RIGHT */}
-                    {cloneElement(defaultContent, { compact: true })}
-
+          return (
+           <motion.div
+  key={title}
+  layout
+  onClick={() => {
+    if (active !== title) {
+      setActive(title)
+    } else if (routes[title]) {
+      navigate(routes[title])
+    }
+  }}
+  className={`cursor-pointer bg-white p-5 border border-gray-200 overflow-hidden 
+    ${getHeights(col, title)}
+  `}
+>
+              {isCompact ? (
+                <div className="flex items-center justify-between h-full px-2">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-[#777777]">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="text-sm font-semibold text-[#777777]">
+                      {title}
+                    </span>
                   </div>
-                ) : (
-                  <>
-                    <CardTitle icon={icon}>{title}</CardTitle>
 
-                    {active === title
-                      ? activeContent || defaultContent
-                      : defaultContent}
-                  </>
-                )}
-              </motion.div>
-            )
-          })}
-        </motion.div>
-      ))}
-    </div>
+                  {cloneElement(defaultContent, { compact: true })}
+                </div>
+              ) : (
+                <>
+                  <CardTitle icon={icon}>{title}</CardTitle>
+
+                  {active === title
+                    ? activeContent || defaultContent
+                    : defaultContent}
+                </>
+              )}
+            </motion.div>
+          )
+        })}
+      </motion.div>
+    ))}
+  </div>
+
+ 
+</>
   )
 }
 
@@ -160,42 +173,8 @@ function AnimatedGrid() {
 
 export function Dashboard() {
   return (
-    <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat font-sans text-gray-900"
-      style={{
-        backgroundImage: `linear-gradient(rgba(18,18,22,0.55), rgba(18,18,22,0.65)), url(${Pacman})`,
-      }}
-    >
-      {/* HEADER */}
-    <header className="relative flex h-14 items-center justify-between bg-[#1a1a1a]/40 px-6 text-white backdrop-blur-md">
+    <div className="min-h-screen font-sans text-gray-900">
   
-  {/* LEFT */}
-  <button className="rounded p-2 hover:bg-white/10">
-    <Menu className="h-6 w-6" />
-  </button>
-
-  {/* CENTER LOGO */}
-  <div className="absolute left-1/2 transform -translate-x-1/2">
-    <img
-      src={logo}
-      alt="Pacman Logo"
-      className="h-8 object-contain"
-    />
-  </div>
-
-  {/* RIGHT */}
-  <div className="flex items-center gap-3">
-    <button className="relative rounded p-2 hover:bg-white/10">
-      <Bell className="h-5 w-5" />
-      <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-accent" />
-    </button>
-
-    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black">
-      <span className="text-sm font-bold">👤</span>
-    </div>
-  </div>
-
-</header>
 
       {/* SUB HEADER */}
       <div className="mt-6 ml-20 flex w-[89%] items-center justify-between pl-4 bg-white h-12">
