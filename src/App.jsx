@@ -1,13 +1,13 @@
 import { Dashboard } from './components/Dashboard'
 import {  Routes, Route } from "react-router-dom"
-import CostDetailsPage from "./components/CostDetailspage"
+import CostDetailsPage from "./components/DetailsRaoutes/CostDetailspage"
 import { Header } from "./components/Header"
 import Pacman from "./assets/pacman_bg.jpg"
-import MonitoringDetailsPage from "./components/MonitoringDetailsPage"
-import InventoryDetailsPage from "./components/InventoryDetailsPage"
-import UtilizationDetailsPage from "./components/UtilizationDetailsPage"
-import ComplianceDetailsPage from "./components/ComplianceDetailsPage"
-import StorageDetailsPage from "./components/StorageDetailsPage"
+import MonitoringDetailsPage from "./components/DetailsRaoutes/MonitoringDetailsPage"
+import InventoryDetailsPage from "./components/DetailsRaoutes/InventoryDetailsPage"
+import UtilizationDetailsPage from "./components/DetailsRaoutes/UtilizationDetailsPage"
+import ComplianceDetailsPage from "./components/DetailsRaoutes/ComplianceDetailsPage"
+import StorageDetailsPage from "./components/DetailsRaoutes/StorageDetailsPage"
 function App() {
   return  (
     <div  className="min-h-screen bg-cover bg-center bg-no-repeat font-sans text-gray-900"

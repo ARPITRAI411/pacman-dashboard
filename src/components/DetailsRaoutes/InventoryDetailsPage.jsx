@@ -1,7 +1,7 @@
 import { Filter, X } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { DetailedInventoryContent } from "./InventoryContent"
-import { SubHeader } from "./SubHeader"
+import { DetailedInventoryContent } from "../L2Content/InventoryContent"
+import { SubHeader } from "../SubHeader"
 
 export default function InventoryDetailsPage() {
   const navigate = useNavigate()

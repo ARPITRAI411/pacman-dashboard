@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts"
-import { SubHeader } from "./SubHeader"
+import { SubHeader } from "../SubHeader"
 
 const cpuData = Array.from({ length: 30 }, (_, i) => ({
   name: i,

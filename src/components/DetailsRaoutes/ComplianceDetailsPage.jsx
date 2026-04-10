@@ -1,12 +1,22 @@
 import { Filter, X } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { SubHeader } from "./SubHeader"
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts"
+import { SubHeader } from "../SubHeader"
 
-const storageData = [
-  { name: "EBS", percent: 30.12, size: "1.25PB", color: "bg-pink-200 border-pink-400" },
-  { name: "S3", percent: 36.14, size: "1.5PB", color: "bg-blue-200 border-blue-400" },
-  { name: "GLACIER", percent: 18.07, size: "0.75PB", color: "bg-yellow-200 border-yellow-500" },
-  { name: "OTHER", percent: 15.66, size: "0.65PB", color: "bg-green-200 border-green-500" },
+const data = [
+  { name: "SECURITY", value: 30, remaining: 70 },
+  { name: "TAGGING", value: 50, remaining: 50 },
+  { name: "CERTIFICATES", value: 65, remaining: 35 },
+  { name: "PATCHING", value: 75, remaining: 25 },
+  { name: "SOX", value: 60, remaining: 40 },
+  { name: "CLOUD OP", value: 25, remaining: 75 },
 ]
 
 const tableData = Array.from({ length: 12 }, (_, i) => ({
@@ -19,13 +29,13 @@ const tableData = Array.from({ length: 12 }, (_, i) => ({
   label7: `Data R${i + 1}C7`,
 }))
 
-export default function StorageDetailsPage() {
+export default function ComplianceDetailsPage() {
   const navigate = useNavigate()
 
   return (
     <div className="min-h-screen">
 
-    <SubHeader />
+     <SubHeader />
 
       {/* 🔥 MAIN */}
       <div className="mx-auto w-[90%] mt-4 bg-white p-8 shadow-md">
@@ -33,8 +43,8 @@ export default function StorageDetailsPage() {
         {/* HEADER */}
         <div className="flex justify-between items-start mb-6">
           <div>
-           <h1 className="text-[28px] font-bold text-[#5f6b76]">
-              STORAGE
+            <h1 className="text-[28px] font-bold text-[#5f6b76]">
+              COMPLIANCE
             </h1>
             <p className="text-gray-500 text-sm mt-1">All Apps</p>
           </div>
@@ -51,31 +61,49 @@ export default function StorageDetailsPage() {
           </div>
         </div>
 
-        {/* 🔷 STORAGE BLOCKS */}
-        <div className="flex w-full h-[250px] mb-8 border-t border-b">
+        {/* 📊 BAR CHART */}
+       <div className="h-[300px] mb-8">
+  <ResponsiveContainer width="100%" height="100%">
+    <BarChart data={data} barCategoryGap="40%">
 
-          {storageData.map((item, i) => (
-            <div
-              key={i}
-              className={`flex flex-col justify-between items-center flex-1 border-r last:border-none ${item.color}`}
-            >
-              {/* TOP LABEL */}
-              <div className="mt-4 text-center">
-                <p className="text-xs font-semibold text-gray-600">
-                  {item.name}
-                </p>
-                <p className="text-sm font-bold text-gray-700">
-                  {item.percent}%
-                </p>
-              </div>
+      {/* GRID */}
+      <CartesianGrid stroke="#d1d5db" vertical={false} />
 
-              {/* BOTTOM SIZE */}
-              <div className="mb-4 text-sm text-gray-600">
-                {item.size}
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* AXIS */}
+      <XAxis
+        dataKey="name"
+        tick={{ fontSize: 12 }}
+        axisLine={false}
+        tickLine={false}
+      />
+
+      <YAxis
+        domain={[0, 100]}
+        tickFormatter={(v) => `${v}%`}
+        tick={{ fontSize: 12 }}
+        axisLine={false}
+        tickLine={false}
+      />
+
+      {/* 🔥 PINK BAR */}
+      <Bar
+        dataKey="remaining"
+        stackId="a"
+        fill="#ED0295"
+       
+      />
+
+      {/* grey BAR */}
+      <Bar
+        dataKey="value"
+        stackId="a"
+        fill="#BDBDBD"
+        
+      />
+
+    </BarChart>
+  </ResponsiveContainer>
+</div>
 
         {/* 🔽 TABLE HEADER */}
         <div className="flex justify-between items-center mb-4">
@@ -108,7 +136,12 @@ export default function StorageDetailsPage() {
 
             <tbody>
               {tableData.map((row, i) => (
-                <tr key={i} className={`${i % 2 === 1 ? "bg-gray-100" : ""}`}>
+                <tr
+                  key={i}
+                  className={`${
+                    i % 2 === 1 ? "bg-gray-100" : ""
+                  }`}
+                >
                   <td className="py-2">{row.label1}</td>
                   <td>{row.number}</td>
                   <td>{row.date}</td>

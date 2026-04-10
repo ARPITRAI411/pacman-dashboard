@@ -45,16 +45,16 @@ export function DetailedCostContent() {
   { name: "JUN", actual: 700, projected: 500, runRate: 0.35 },
   { name: "JUL", actual: 500, projected: 600, runRate: 0.32 },
   { name: "AUG", actual: 550, projected: 750, runRate: 0.38 },
-  { name: "SEP", actual: 300, projected: 900, runRate: 0.28 },
-  { name: "OCT", actual: 0, projected: 920, runRate: 0.25 },
-  { name: "NOV", actual: 0, projected: 900, runRate: 0.35 },
+  // { name: "SEP", actual: 300, projected: 900, runRate: 0.28 },
+  // { name: "OCT", actual: 0, projected: 920, runRate: 0.25 },
+  // { name: "NOV", actual: 0, projected: 900, runRate: 0.35 },
 ]
 
   return (
     <div className="flex flex-col h-full px-6 pt-4 pb-6">
 
       {/* CHART */}
-      <div className="w-full h-[220px]">
+      <div className="w-full h-[200px]">
 
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} barGap={0}>
@@ -89,6 +89,8 @@ export function DetailedCostContent() {
     value: "COST",
     angle: -90,
     position: "insideLeft",
+    dx: -5, 
+    dy: 30,    
     style: { fill: "#6b7280", fontSize: 12 },
   }}
             />
@@ -107,6 +109,8 @@ export function DetailedCostContent() {
     angle: 90,
     position: "insideRight",
     style: { fill: "#6b7280", fontSize: 12 },
+    dx: -5,   
+    dy: 40,    
   }}
             />
 
@@ -137,7 +141,7 @@ export function DetailedCostContent() {
             {/* DOTTED RUN RATE LINE */}
             <Line
               yAxisId="right"
-              type="monotone"
+              type="natural"
               dataKey="runRate"
               stroke="#9ca3af"
               strokeDasharray="3 3"
@@ -175,7 +179,7 @@ export function DetailedCostContent() {
       </div>
 
       {/* BOTTOM VALUE */}
-      <div className="mt-13 mr-10">
+      <div className="mt-8 mr-10">
         <h1 className="text-[30px] font-bold text-[#ff0a78] leading-none">
           $24.0K
           <span className="text-sm ml-2 font-medium text-gray-500">
