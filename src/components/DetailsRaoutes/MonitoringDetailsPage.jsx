@@ -1,6 +1,6 @@
 import { Filter, X } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { SubHeader } from "./SubHeader"
+import { SubHeader } from "../SubHeader"
 
 function Dot({ type = "green" }) {
   let color = "bg-[#70C530]"

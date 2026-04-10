@@ -63,18 +63,18 @@ export function DetailedComplianceContent() {
     };
   };
 
-  const describeArc = (r, value) => {
-    const startAngle = -90;
-    const endAngle = startAngle + (value / 100) * 180;
+ const describeArc = (r, value) => {
+  const startAngle = -90;
+  const endAngle = startAngle + (value / 100) * 180;
 
-    const start = polarToCartesian(150, 150, r, startAngle);
-    const end = polarToCartesian(150, 150, r, endAngle);
+  const start = polarToCartesian(180, 150, r, startAngle);
+  const end = polarToCartesian(180, 150, r, endAngle);
 
-    return `
-      M ${start.x} ${start.y}
-      A ${r} ${r} 0 0 1 ${end.x} ${end.y}
-    `;
-  };
+  return `
+    M ${start.x} ${start.y}
+    A ${r} ${r} 0 0 1 ${end.x} ${end.y}
+  `;
+};
 
   return (
     <div className="p-8 rounded-xl w-fullt ">
@@ -82,61 +82,63 @@ export function DetailedComplianceContent() {
   
     
 
-      <div className="flex items-center justify-center gap-2">
-        
-        {/* LEFT */}
-       
-<div className="w-[45%] pr-2">
-  <div className="mb-2">
-    <span className="text-pink-600 text-sm">All Apps</span>
-    <h1 className="text-3xl font-bold text-pink-600 inline ml-2">
-      99.82%
-    </h1>
+<div className="flex items-center justify-between px-4">
+
+  {/* LEFT TEXT */}
+  <div className="w-[45%]">
+    
+    {/* TOP TEXT */}
+    <div className="flex items-end gap-2 mb-3">
+      <span className="text-pink-600 text-sm">All Apps</span>
+      <h1 className="text-[34px] font-bold text-pink-600 leading-none">
+        99.82%
+      </h1>
+    </div>
+
+    {/* LIST */}
+    <div className="space-y-2 text-sm">
+      {data.map((item) => (
+        <div key={item.label} className="flex justify-between w-[160px]">
+          <span className="text-gray-800">{item.label}</span>
+          <span className="text-gray-800">{item.value}%</span>
+        </div>
+      ))}
+    </div>
   </div>
 
-  <div className="space-y-1 text-sm text-gray-700">
-    {data.map((item) => (
-      <div key={item.label} className="flex justify-between w-40">
-        <span>{item.label}</span>
-        <span>{item.value}%</span>
-      </div>
-    ))}
+  {/* RIGHT HALF DONUT */}
+  <div className="w-[55%] flex justify-center">
+    <svg width="320" height="260" viewBox="0 0 320 260">
+
+      {data.map((item, i) => {
+        const r = 110 - i * 14;
+
+        return (
+          <g key={i}>
+            {/* background */}
+            <path
+              d={describeArc(r, 100)}
+              stroke="#eeeeee"
+              strokeWidth="14"
+              fill="none"
+              strokeLinecap="round"
+            />
+
+            {/* value */}
+            <path
+              d={describeArc(r, item.value)}
+              stroke={item.color}
+              strokeWidth="14"
+              fill="none"
+              strokeLinecap="round"
+            />
+          </g>
+        );
+      })}
+
+    </svg>
   </div>
 </div>
-
-{/* RIGHT SVG CHART */}
-
-
-        {/* RIGHT SVG CHART */}
-    <div className="w-[55%] flex justify-start -ml-6">
-  <svg width="300" height="300" viewBox="0 0 300 300">
-            
-            {/* Background arcs */}
-            {data.map((_, i) => (
-              <path
-                key={i}
-                d={describeArc(radiusStart - i * gap, 100)}
-                stroke="#e5e5e5"
-                strokeWidth="12"
-                fill="none"
-              />
-            ))}
-
-            {/* Colored arcs */}
-            {data.map((item, i) => (
-              <path
-                key={i}
-                d={describeArc(radiusStart - i * gap, item.value)}
-                stroke={item.color}
-                strokeWidth="12"
-                fill="none"
-                strokeLinecap="butt"
-              />
-            ))}
-
-          </svg>
-        </div>
-      </div>
 
       {/* BOTTOM */}
       <div className="flex justify-around mt-8 text-center">

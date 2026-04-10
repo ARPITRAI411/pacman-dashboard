@@ -1,7 +1,7 @@
-import { DetailedCostContent } from "./CostContent"
+import { DetailedCostContent } from "../L2Content/CostContent"
 import { Filter ,X } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { SubHeader } from "./SubHeader"
+import { SubHeader } from "../SubHeader"
 
 export default function CostDetailsPage() {
   const navigate = useNavigate()

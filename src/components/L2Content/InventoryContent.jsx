@@ -116,6 +116,8 @@ export function DetailedInventoryContent({ compact }) {
               label={{
                 value: "INSTANCES",
                 angle: -90,
+                  dx: -10, 
+                    dy: 30,  
                 position: "insideLeft",
                 style: { fill: "#6b7280", fontSize: 12 },
               }}
@@ -174,7 +176,7 @@ export function DetailedInventoryContent({ compact }) {
       {/* BOTTOM CONTENT (FIXED VISIBILITY) */}
       <div className="mt-auto pt-4 mb-15">
         <div className="flex items-center gap-3">
-          <h1 className="text-[42px] font-bold text-accent leading-none">
+          <h1 className="text-[32px] font-bold text-accent leading-none">
             6.5K
           </h1>
           <p className="text-sm text-accent leading-tight">

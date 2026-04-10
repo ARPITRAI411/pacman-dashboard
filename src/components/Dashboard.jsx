@@ -1,6 +1,5 @@
 import React, { useState, cloneElement } from "react"
 import {
-  
   Filter,
   DollarSign,
   Cloud,
@@ -9,14 +8,13 @@ import {
   Database,
   Activity,
 } from "lucide-react"
-import Pacman from "../assets/pacman_bg.jpg"
 import { motion } from "framer-motion"
-import { MonitoringContent,DetailedMonitoringContent } from "./MonitoringContent"
-import { InventoryContent ,DetailedInventoryContent } from "./InventoryContent"
-import { UtilizationContent,DetailedUtilizationContent } from "./UtilizationContent"
-import { CostContent,DetailedCostContent } from "./CostContent"
-import { ComplianceContent,DetailedComplianceContent} from "./ComplianceContent"
-import { StorageContent,DetailedStorageContent } from "./StorageContent"
+import { MonitoringContent,DetailedMonitoringContent } from "./L2Content/MonitoringContent"
+import { InventoryContent ,DetailedInventoryContent } from "./L2Content/InventoryContent"
+import { UtilizationContent,DetailedUtilizationContent } from "./L2Content/UtilizationContent"
+import { CostContent,DetailedCostContent } from "./L2Content/CostContent"
+import { ComplianceContent,DetailedComplianceContent} from "./L2Content/ComplianceContent"
+import { StorageContent,DetailedStorageContent } from "./L2Content/StorageContent"
 import {useNavigate} from 'react-router-dom'
 
 
@@ -24,12 +22,12 @@ import {useNavigate} from 'react-router-dom'
 
 function CardTitle({ icon: Icon, children }) {
   return (
-    <div className="mb-4 flex gap-2 items-center  justify-center pb-3 pt-2">
-      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-[#777777]">
+    <div className="mb-4 flex items-center  justify-center  pt-2">
+      <span className="flex h-9 w-9 items-center justify-center font-bold  text-[#777777]">
         <Icon className="h-5 w-5" />
       </span>
 
-      <span className="text-base font-semibold tracking-wide text-[#777777]">
+      <span className=" font-bold tracking-wide text-[#777777]">
         {children}
       </span>
     </div>
@@ -137,11 +135,11 @@ const routes = {
 >
               {isCompact ? (
                 <div className="flex items-center justify-between h-full px-2">
-                  <div className="flex items-center gap-2">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-[#777777]">
+                  <div className="flex items-center ">
+                    <span className="flex h-8 w-8 items-center justify-center  text-[#777777]">
                       <Icon className="h-4 w-4" />
                     </span>
-                    <span className="text-sm font-semibold text-[#777777]">
+                    <span className="text-sm font-bold text-[#777777]">
                       {title}
                     </span>
                   </div>
