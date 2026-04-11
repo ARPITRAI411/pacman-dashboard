@@ -1,12 +1,13 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts"
 
+
 export function ComplianceContent({ compact }) {
   if (compact) {
     return (
       <div className="flex items-center ">
-           <p className="mt-2 text-gray-600">
-        <span className="font-bold text-black">58</span> Rules |
-      </p>
+        <p className="mt-2 text-gray-600">
+          <span className="font-bold text-black">58</span> Rules |
+        </p>
         <h1 className="text-2xl font-bold text-accent">99.82%</h1>
         <p className="text-xs text-accent">Compliance</p>
       </div>
@@ -42,105 +43,113 @@ export function ComplianceContent({ compact }) {
   )
 }
 
+
+const data = [
+  { name: "SECURITY", value: 28 },
+  { name: "TAGGING", value: 50 },
+  { name: "CERTIFICATES", value: 65 },
+  { name: "PATCHING", value: 75 },
+  { name: "SOX", value: 60 },
+  { name: "CLOUD OP", value: 25 },
+]
+
+const colors = [
+  "#ff4fa3",
+  "#ff2f8f",
+  "#ff0f7b",
+  "#e60073",
+  "#c7005f",
+  "#99004d",
+]
+
+
 export function DetailedComplianceContent() {
-  const data = [
-    { label: "SECURITY", value: 28, color: "#ff2f92" },
-    { label: "TAGGING", value: 50, color: "#ff1f8a" },
-    { label: "CERTIFICATES", value: 65, color: "#ff0f82" },
-    { label: "PATCHING", value: 75, color: "#e60073" },
-    { label: "SOX", value: 60, color: "#cc0066" },
-    { label: "CLOUD OP", value: 25, color: "#99004d" },
-  ];
-
-  const radiusStart = 90;
-  const gap = 14;
-
-  const polarToCartesian = (cx, cy, r, angle) => {
-    const rad = (angle * Math.PI) / 180;
-    return {
-      x: cx + r * Math.cos(rad),
-      y: cy + r * Math.sin(rad),
-    };
-  };
-
- const describeArc = (r, value) => {
-  const startAngle = -90;
-  const endAngle = startAngle + (value / 100) * 180;
-
-  const start = polarToCartesian(180, 150, r, startAngle);
-  const end = polarToCartesian(180, 150, r, endAngle);
-
-  return `
-    M ${start.x} ${start.y}
-    A ${r} ${r} 0 0 1 ${end.x} ${end.y}
-  `;
-};
+  const radiusBase = 120
+  const strokeWidth = 14
+  const gap = 6
 
   return (
-    <div className="p-8 rounded-xl w-fullt ">
+    <div className=" bg-white">
       
-  
-    
+      {/* TOP SECTION */}
+      <div className="flex items-center gap-4">
+        
+        {/* LEFT */}
+        <div className="ml-15">
+          <div className="flex items-center gap-2">
+            <span className="text-pink-500 text-sm">All Apps</span>
+            <span className="text-3xl font-bold text-pink-600">
+              99.82%
+            </span>
+          </div>
 
-<div className="flex items-center justify-between px-4">
-
-  {/* LEFT TEXT */}
-  <div className="w-[45%]">
-    
-    {/* TOP TEXT */}
-    <div className="flex items-end gap-2 mb-3">
-      <span className="text-pink-600 text-sm">All Apps</span>
-      <h1 className="text-[34px] font-bold text-pink-600 leading-none">
-        99.82%
-      </h1>
-    </div>
-
-    {/* LIST */}
-    <div className="space-y-2 text-sm">
-      {data.map((item) => (
-        <div key={item.label} className="flex justify-between w-[160px]">
-          <span className="text-gray-800">{item.label}</span>
-          <span className="text-gray-800">{item.value}%</span>
+          <div className="mt-4">
+            {data.map((item, i) => (
+              <div
+                key={i}
+                className="flex justify-between w-[180px] text-sm"
+              >
+                <span className="text-gray-700">{item.name}</span>
+                <span className="text-black font-medium">
+                  {item.value}%
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
 
-  {/* RIGHT HALF DONUT */}
-  <div className="w-[55%] flex justify-center">
-    <svg width="320" height="260" viewBox="0 0 320 260">
+        {/* RIGHT RADIAL */}
+        <div className=" relative -ml-6">
+      <svg width="320" height="320" viewBox="0 0 320 320">
+  {data.map((_, i) => {
+    const r = radiusBase - i * (strokeWidth + gap)
+    const circumference = 2 * Math.PI * r
+    const half = circumference / 2
 
-      {data.map((item, i) => {
-        const r = 110 - i * 14;
+    return (
+      <circle
+        key={`bg-${i}`}
+        cx="160"
+        cy="160"
+        r={r}
+        fill="none"
+        stroke="#eee"
+        strokeWidth={strokeWidth}
+        strokeDasharray={`${half} ${circumference}`}
+        strokeDashoffset={0}
+        transform="rotate(-90 160 160)"  // 🔥 important
+      />
+    )
+  })}
 
-        return (
-          <g key={i}>
-            {/* background */}
-            <path
-              d={describeArc(r, 100)}
-              stroke="#eeeeee"
-              strokeWidth="14"
-              fill="none"
-              strokeLinecap="round"
-            />
+  {data.map((item, i) => {
+    const r = radiusBase - i * (strokeWidth + gap)
+    const circumference = 2 * Math.PI * r
+    const half = circumference / 2
 
-            {/* value */}
-            <path
-              d={describeArc(r, item.value)}
-              stroke={item.color}
-              strokeWidth="14"
-              fill="none"
-              strokeLinecap="round"
-            />
-          </g>
-        );
-      })}
+    const progress = half * ( 1- item.value / 100)
 
-    </svg>
-  </div>
-</div>
+    return (
+      <circle
+        key={i}
+        cx="160"
+        cy="160"
+        r={r}
+        fill="none"
+        stroke={colors[i]}
+        strokeWidth={strokeWidth}
+        strokeLinecap="butt" // 🔥 important (no rounded ends)
+        strokeDasharray={`${half} ${circumference}`}
+        strokeDashoffset={progress}
+        transform="rotate(-90 160 160)" 
+      />
+    )
+  })}
+</svg>
+        </div>
+      </div>
 
-      {/* BOTTOM */}
+  
       <div className="flex justify-around mt-8 text-center">
         <div>
           <h1 className="text-2xl font-bold text-pink-600">200,000</h1>
@@ -158,5 +167,5 @@ export function DetailedComplianceContent() {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -60,8 +60,8 @@ export function DetailedUtilizationContent() {
       <div className="flex items-center gap-3 h-[70px]">
 
   {/* LEFT LABEL (MATCH DETAILS PAGE) */}
-  <div className="w-[50px] flex items-center justify-center">
-    <span className="rotate-[-90deg] text-gray-500 text-xs">CPU</span>
+  <div className="w-[60px] flex items-center justify-center">
+    <span className="rotate-[-90deg] text-gray-500 text-xs tracking-wide">CPU</span>
   </div>
 
   {/* CHART */}
@@ -83,8 +83,8 @@ export function DetailedUtilizationContent() {
       {/* IO */}
    <div className="flex items-center gap-3 h-[70px] mt-5">
 
-  <div className="w-[50px] flex items-center justify-center">
-    <span className="rotate-[-90deg] text-gray-500 text-xs">I/O</span>
+  <div className="w-[60px] flex items-center justify-center">
+    <span className="rotate-[-90deg] text-gray-500 text-xs tracking-wide">I/O</span>
   </div>
 
   <div className="flex-1">
@@ -112,8 +112,8 @@ export function DetailedUtilizationContent() {
       {/* DISK */}
      <div className="flex items-center gap-3 h-[70px] mt-5">
 
-  <div className="w-[50px] flex items-center justify-center">
-    <span className="rotate-[-90deg] text-gray-500 text-xs">DISK</span>
+  <div className="w-[60px] flex items-center justify-center">
+    <span className="rotate-[-90deg] text-gray-500 text-xs tracking-wide">DISK</span>
   </div>
 
   <div className="flex-1">
