@@ -1,4 +1,4 @@
-import { Filter, X } from "lucide-react"
+import { Filter, X, Search } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { DetailedInventoryContent } from "../L2Content/InventoryContent"
 import { SubHeader } from "../SubHeader"
@@ -54,16 +54,31 @@ export default function InventoryDetailsPage() {
 </div>
 
 {/* 🔽 TABLE HEADER */}
-<div className="mt-12 border-t pt-6 flex justify-between items-center mb-4">
-  <p className="text-gray-600 text-sm">Showing 12 Records</p>
+<div className="mt-8 pt-5 pb-5 border-y border-gray-400 flex justify-between items-center bg-white">
 
-  <div className="flex items-center gap-2">
-    <button className="bg-gray-200 p-2">🔽</button>
-    <input
-      type="text"
-      placeholder="SEARCH"
-      className="border px-3 py-2 text-sm"
-    />
+  {/* LEFT */}
+  <p className="text-[14px] text-gray-500">
+    Showing <span className="font-medium text-gray-700">12</span> Records
+  </p>
+
+  
+  <div className="flex items-center gap-3">
+
+   
+    <button className="w-10 h-10 flex items-center justify-center bg-gray-100 border border-gray-200">
+      <Filter className="h-5 w-5 text-gray-400 fill-gray-400" />
+    </button>
+
+    {/* SEARCH */}
+    <div className="flex items-center border border-gray-300 px-3 h-10 w-[220px]">
+      <Search size={16} className="text-gray-400 mr-2" />
+      <input
+        type="text"
+        placeholder="SEARCH"
+        className="outline-none text-sm w-full placeholder:text-gray-400"
+      />
+    </div>
+
   </div>
 </div>
 
