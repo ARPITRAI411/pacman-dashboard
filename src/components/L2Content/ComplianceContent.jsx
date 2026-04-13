@@ -62,108 +62,105 @@ const colors = [
   "#99004d",
 ]
 
-
 export function DetailedComplianceContent() {
-  const radiusBase = 120
-  const strokeWidth = 14
-  const gap = 6
+  const radiusBase = 110
+  const strokeWidth = 12
+  const gap = 4
 
   return (
-    <div className=" bg-white">
+    <div className="bg-white px-4  pb-4 ml-10">
       
-      {/* TOP SECTION */}
-      <div className="flex items-center gap-4">
-        
-        {/* LEFT */}
-        <div className="ml-15">
-          <div className="flex items-center gap-2">
-            <span className="text-pink-500 text-sm">All Apps</span>
-            <span className="text-3xl font-bold text-pink-600">
-              99.82%
-            </span>
-          </div>
+      {/* TOP */}
+      <div className="flex items-end justify-center">
 
-          <div className="mt-4">
+        {/* LEFT TEXT */}
+        <div className="text-right ml-10 ">
+          <p className="text-xs text-[#e10098]">All Apps</p>
+
+          <h2 className="leading-none text-[#e10098]">
+            <span className="text-xl font-bold">99.82</span>
+            <span className="text-lg">%</span>
+          </h2>
+
+          <div className="space-y-1 text-[10px] text-gray-700 mt-2">
             {data.map((item, i) => (
-              <div
-                key={i}
-                className="flex justify-between w-[180px] text-sm"
-              >
-                <span className="text-gray-700">{item.name}</span>
-                <span className="text-black font-medium">
-                  {item.value}%
-                </span>
+              <div key={i} className="flex justify-end gap-2">
+                <span>{item.name}</span>
+                <span>{item.value}%</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* RIGHT RADIAL */}
-        <div className=" relative -ml-6">
-      <svg width="320" height="320" viewBox="0 0 320 320">
-  {data.map((_, i) => {
-    const r = radiusBase - i * (strokeWidth + gap)
-    const circumference = 2 * Math.PI * r
-    const half = circumference / 2
+        {/* RIGHT GRAPH */}
+        <div className="relative h-[300px] w-[300px] overflow-hidden">
+          <svg viewBox="-20 0 320 320" width="100%" height="100%">
+            
+            {/* BACKGROUND */}
+            {data.map((_, i) => {
+              const r = radiusBase - i * (strokeWidth + gap)
+              const circumference = 2 * Math.PI * r
+              const half = circumference / 2
 
-    return (
-      <circle
-        key={`bg-${i}`}
-        cx="160"
-        cy="160"
-        r={r}
-        fill="none"
-        stroke="#eee"
-        strokeWidth={strokeWidth}
-        strokeDasharray={`${half} ${circumference}`}
-        strokeDashoffset={0}
-        transform="rotate(-90 160 160)"  // 🔥 important
-      />
-    )
-  })}
+              return (
+                <circle
+                  key={`bg-${i}`}
+                  cx="0"
+                  cy="160"
+                  r={r}
+                  fill="none"
+                  stroke={colors[i]}
+                  strokeWidth={strokeWidth}
+                  strokeDasharray={`${half} ${circumference}`}
+                  transform="rotate(-90 0 160)"
+                />
+              )
+            })}
 
-  {data.map((item, i) => {
-    const r = radiusBase - i * (strokeWidth + gap)
-    const circumference = 2 * Math.PI * r
-    const half = circumference / 2
+            {/* PROGRESS */}
+            {data.map((item, i) => {
+              const r = radiusBase - i * (strokeWidth + gap)
+              const circumference = 2 * Math.PI * r
+              const half = circumference / 2
 
-    const progress = half * ( 1- item.value / 100)
+              const progress = half * (1 - item.value / 100)
 
-    return (
-      <circle
-        key={i}
-        cx="160"
-        cy="160"
-        r={r}
-        fill="none"
-        stroke={colors[i]}
-        strokeWidth={strokeWidth}
-        strokeLinecap="butt" // 🔥 important (no rounded ends)
-        strokeDasharray={`${half} ${circumference}`}
-        strokeDashoffset={progress}
-        transform="rotate(-90 160 160)" 
-      />
-    )
-  })}
-</svg>
+              return (
+                <circle
+                  key={i}
+                  cx="0"
+                  cy="160"
+                  r={r}
+                  fill="none"
+                   stroke="#eeeeee"
+                  strokeWidth={strokeWidth}
+                  strokeDasharray={`${half} ${circumference}`}
+                  strokeDashoffset={progress}
+                  transform="rotate(-90 0 160)"
+                />
+              )
+            })}
+          </svg>
         </div>
       </div>
 
-  
-      <div className="flex justify-around mt-8 text-center">
+      {/* BOTTOM */}
+      <div className="mt-6 grid grid-cols-3 relative right-10 text-center">
         <div>
-          <h1 className="text-2xl font-bold text-pink-600">200,000</h1>
-          <p className="text-gray-600 text-sm">Scanned</p>
+          <h3 className="text-sm font-bold text-[#e10098]">200,000</h3>
+          <p className="text-xs text-gray-500">Scanned</p>
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold text-pink-600">25</h1>
-          <p className="text-gray-600 text-sm">Issues Found</p>
+          <h3 className="text-sm font-bold text-[#e10098]">25</h3>
+          <p className="text-xs text-gray-500">Issues Found</p>
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold text-pink-600">0.001%</h1>
-          <p className="text-gray-600 text-sm">Items with issues</p>
+          <h3 className="text-sm font-bold text-[#e10098]">
+            0.001<span>%</span>
+          </h3>
+          <p className="text-xs text-gray-500">Items with issues</p>
         </div>
       </div>
     </div>
