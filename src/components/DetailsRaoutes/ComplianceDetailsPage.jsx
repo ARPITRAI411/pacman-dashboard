@@ -49,7 +49,7 @@ export default function ComplianceDetailsPage() {
             <p className="text-gray-500 text-sm mt-1">All Apps</p>
           </div>
 
-          <div className="flex items-center gap-6 text-pink-600 font-semibold text-sm">
+          <div className="flex items-center gap-6 text-[#D20989] font-bold text-[13px]">
             <span>⬇ DOWNLOAD</span>
             <span>🔗 SHARE</span>
             <button

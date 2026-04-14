@@ -118,7 +118,7 @@ export function DetailedCostContent() {
             <Bar
               yAxisId="left"
               dataKey="actual"
-              fill="#ff0a78"
+              fill= "#D20989"
             
               barSize={16}
             />
@@ -157,12 +157,12 @@ export function DetailedCostContent() {
       <div className="flex w-130 ml-10 justify-between  items-center mt-4 text-xs text-gray-500">
 
         <div className="flex items-center gap-2">
-          <div className="w-2 h-3 bg-pink-600"></div>
+          <div className="w-2 h-3 bg-accent"></div>
           <span>ACTUAL COST</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-pink-600 opacity-70"></div>
+          <div className="w-3 h-3 bg-accent opacity-70"></div>
           <span>ACTUAL RUN RATE</span>
         </div>
 
@@ -179,13 +179,14 @@ export function DetailedCostContent() {
       </div>
 
       {/* BOTTOM VALUE */}
-      <div className="mt-8 mr-10">
-        <h1 className="text-[30px] font-bold text-[#ff0a78] leading-none">
+      <div className="mt-12 mr-10  flex">
+        <h1 className="text-[30px] font-bold text-[#D20989] leading-none">
           $24.0K
-          <span className="text-sm ml-2 font-medium text-gray-500">
-            /Day Run Rate
-          </span>
+         
         </h1>
+         <h6 className="text-sm ml-2 font-medium text-[#D20989]">
+            /Day Run  <br /> Rate
+          </h6>
       </div>
 
     </div>
