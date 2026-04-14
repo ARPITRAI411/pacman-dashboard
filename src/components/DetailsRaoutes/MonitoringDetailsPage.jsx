@@ -1,6 +1,7 @@
 import { Filter, X } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { SubHeader } from "../SubHeader"
+import { useState } from "react"
 
 function Dot({ type = "green" }) {
   let color = "bg-[#70C530]"
@@ -55,15 +56,14 @@ function DotGrid({ variant }) {
   )
 }
 
-function MonitoringCard({ title, variant }) {
-  const navigate = useNavigate()
-
+function MonitoringCard({ title, variant ,onClose }) {
+  
   return (
     <div className="bg-white p-6 shadow-md w-full relative">
 
       {/* ❌ CLOSE BUTTON */}
       <button
-        onClick={() => navigate("/")}
+       onClick={() => onClose(title)}
         className="absolute right-4 top-4 bg-gray-600 text-white rounded-full p-1"
       >
         <X size={14} />
@@ -118,20 +118,47 @@ function MonitoringCard({ title, variant }) {
     </div>
   )
 }
-
 export default function MonitoringDetailsPage() {
-  return (
-    <div className=" mt-10">
+  const navigate = useNavigate()
 
-      {/* 🔹 SUB HEADER */}
+  const [visibleCards, setVisibleCards] = useState([
+    "TMNG 1.0",
+    "TMNG 1.1",
+  ])
+
+  const handleClose = (title) => {
+    const updated = visibleCards.filter((item) => item !== title)
+
+    if (updated.length === 0) {
+      navigate("/") // ✅ go back ONLY when both closed
+    } else {
+      setVisibleCards(updated) // ✅ remove only one card
+    }
+  }
+
+  return (
+    <div className="mt-10">
       <SubHeader />
 
-      {/* 🔥 TWO PANELS */}
       <div className="flex h-full gap-3 w-[90%] mx-auto mt-4">
-        <MonitoringCard title="TMNG 1.0" variant="left" />
-        <MonitoringCard title="TMNG 1.1" variant="right" />
-      </div>
+        
+        {visibleCards.includes("TMNG 1.0") && (
+          <MonitoringCard
+            title="TMNG 1.0"
+            variant="left"
+            onClose={handleClose}
+          />
+        )}
 
+        {visibleCards.includes("TMNG 1.1") && (
+          <MonitoringCard
+            title="TMNG 1.1"
+            variant="right"
+            onClose={handleClose}
+          />
+        )}
+
+      </div>
     </div>
   )
 }
