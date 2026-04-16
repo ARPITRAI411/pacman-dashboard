@@ -2,18 +2,21 @@ import { DetailedCostContent } from "../L2Content/CostContent"
 import { Filter, X, Search } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { SubHeader } from "../SubHeader"
+import { useEffect, useState } from "react"
+import { getCostData } from "../../services/api"
 
 export default function CostDetailsPage() {
   const navigate = useNavigate()
-  const tableData = Array.from({ length: 12 }, (_, i) => ({
-  label1: `Data R${i + 1}C1`,
-  number: i + 1,
-  date: `0${i + 1}/08/16`,
-  label4: `Data R${i + 1}C4`,
-  label5: `Data R${i + 1}C5`,
-  label6: `Data R${i + 1}C6`,
-  label7: `Data R${i + 1}C7`,
-}))
+  const [tableData, setTableData] = useState([])
+
+  
+
+useEffect(() => {
+  getCostData().then(res => {
+    setTableData(res.data)
+  })
+}, [])
+
   return (
     <div className="min-h-screen w-[99%] ">
 
@@ -84,35 +87,25 @@ export default function CostDetailsPage() {
 </div>
 
 {/* 📋 TABLE */}
-<div className="overflow-hidden border-t">
-  <table className="w-full text-sm">
-    <thead className="text-left border-b">
-      <tr>
-        <th className="py-2">Label 1</th>
-        <th>Number</th>
-        <th>Date</th>
-        <th>Label 4</th>
-        <th>Label 5</th>
-        <th>Label 6</th>
-        <th>Label 7</th>
-      </tr>
-    </thead>
+<thead>
+  <tr>
+    <th>Month</th>
+    <th>Actual</th>
+    <th>Projected</th>
+    <th>Run Rate</th>
+  </tr>
+</thead>
 
-    <tbody>
-      {tableData.map((row, i) => (
-        <tr key={i} className={`${i % 2 === 1 ? "bg-gray-100" : ""}`}>
-          <td className="py-2">{row.label1}</td>
-          <td>{row.number}</td>
-          <td>{row.date}</td>
-          <td>{row.label4}</td>
-          <td>{row.label5}</td>
-          <td>{row.label6}</td>
-          <td>{row.label7}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+<tbody>
+  {tableData.map((row, i) => (
+    <tr key={i} className={i % 2 === 1 ? "bg-gray-100" : ""}>
+      <td className="py-2">{row.month}</td>
+      <td>${row.actual}k</td>
+      <td>${row.projected}k</td>
+      <td>{row.runRate}</td>
+    </tr>
+  ))}
+</tbody>
 
       </div>
     </div>

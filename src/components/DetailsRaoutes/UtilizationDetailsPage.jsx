@@ -10,34 +10,23 @@ import {
 } from "recharts"
 import { SubHeader } from "../SubHeader"
 
-const cpuData = Array.from({ length: 30 }, (_, i) => ({
-  name: i,
-  value: 8 + Math.random() * 6,
-}))
+import { useEffect, useState } from "react"
+import { getUtilizationData } from "../../services/api"
 
-const ioData = Array.from({ length: 30 }, (_, i) => ({
-  name: i,
-  v1: 120 + Math.random() * 60,
-  v2: 140 + Math.random() * 50,
-}))
 
-const diskData = Array.from({ length: 30 }, (_, i) => ({
-  name: i,
-  v1: 20 + Math.random() * 10,
-  v2: 45 + Math.random() * 10,
-}))
 
-const tableData = Array.from({ length: 12 }, (_, i) => ({
-  label1: `Data R${i + 1}C1`,
-  number: i + 1,
-  date: `0${i + 1}/08/16`,
-  label4: `Data R${i + 1}C4`,
-  label5: `Data R${i + 1}C5`,
-  label6: `Data R${i + 1}C6`,
-  label7: `Data R${i + 1}C7`,
-}))
+
+
+
 export default function UtilizationDetailsPage() {
   const navigate = useNavigate()
+  const [data, setData] = useState([])
+
+useEffect(() => {
+  getUtilizationData().then(res => {
+    setData(res.data)
+  })
+}, [])
 
   return (
     <div className="min-h-screen">
@@ -79,8 +68,8 @@ export default function UtilizationDetailsPage() {
   {/* CHART */}
   <div className="flex-1 h-[150px]">
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={cpuData}>
-        
+      <LineChart data={data}>
+          <Line dataKey="cpu" stroke="#E91E63" strokeWidth={2} dot={false} />
         <CartesianGrid stroke="#e5e7eb" vertical={false} />
 
         <YAxis
@@ -114,8 +103,9 @@ export default function UtilizationDetailsPage() {
 
   <div className="flex-1 h-[150px]">
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={ioData}>
-
+      <LineChart data={data}>
+ <Line dataKey="io1" stroke="#7c3aed" strokeWidth={2} dot={false} />
+  <Line dataKey="io2" stroke="#84cc16" strokeWidth={2} dot={false} />
         <CartesianGrid stroke="#e5e7eb" vertical={false} />
 
         <YAxis
@@ -143,8 +133,9 @@ export default function UtilizationDetailsPage() {
 
   <div className="flex-1 h-[150px]">
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={diskData}>
-
+      <LineChart data={data}>
+ <Line dataKey="disk1" stroke="#0ea5e9" strokeWidth={2} dot={false} />
+  <Line dataKey="disk2" stroke="#f59e0b" strokeWidth={2} dot={false} />
         <CartesianGrid stroke="#e5e7eb" vertical={false} />
 
         <YAxis
@@ -193,35 +184,28 @@ export default function UtilizationDetailsPage() {
 </div>
 
 {/* 📋 TABLE */}
-<div className="overflow-hidden border-t">
-  <table className="w-full text-sm">
-    <thead className="text-left border-b">
-      <tr>
-        <th className="py-2">Label 1</th>
-        <th>Number</th>
-        <th>Date</th>
-        <th>Label 4</th>
-        <th>Label 5</th>
-        <th>Label 6</th>
-        <th>Label 7</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {tableData.map((row, i) => (
-        <tr key={i} className={`${i % 2 === 1 ? "bg-gray-100" : ""}`}>
-          <td className="py-2">{row.label1}</td>
-          <td>{row.number}</td>
-          <td>{row.date}</td>
-          <td>{row.label4}</td>
-          <td>{row.label5}</td>
-          <td>{row.label6}</td>
-          <td>{row.label7}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+<thead>
+  <tr>
+    <th>Time</th>
+    <th>CPU</th>
+    <th>IO1</th>
+    <th>IO2</th>
+    <th>Disk1</th>
+    <th>Disk2</th>
+  </tr>
+</thead>
+<tbody>
+  {data.map((row, i) => (
+    <tr key={i} className={i % 2 ? "bg-gray-100" : ""}>
+      <td>{row.time}</td>
+      <td>{row.cpu}%</td>
+      <td>{row.io1}</td>
+      <td>{row.io2}</td>
+      <td>{row.disk1}</td>
+      <td>{row.disk2}</td>
+    </tr>
+  ))}
+</tbody>
       </div>
     </div>
   )

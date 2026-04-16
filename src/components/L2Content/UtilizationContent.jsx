@@ -6,6 +6,9 @@ import {
   ResponsiveContainer,
 } from "recharts"
 
+import { useEffect, useState } from "react"
+import { getUtilizationData } from "../../services/api"
+
 export function UtilizationContent({ compact }) {
   if (compact) {
     return (
@@ -41,17 +44,14 @@ export function UtilizationContent({ compact }) {
   )
 }
 export function DetailedUtilizationContent() {
-  const data = [
-    { name: "1", cpu: 10, io1: 120, io2: 150, disk1: 45, disk2: 25 },
-    { name: "2", cpu: 8, io1: 150, io2: 130, disk1: 50, disk2: 20 },
-    { name: "3", cpu: 11, io1: 130, io2: 160, disk1: 45, disk2: 30 },
-    { name: "4", cpu: 9, io1: 160, io2: 120, disk1: 48, disk2: 22 },
-    { name: "5", cpu: 10, io1: 140, io2: 150, disk1: 52, disk2: 28 },
-    { name: "6", cpu: 12, io1: 170, io2: 130, disk1: 46, disk2: 24 },
-    { name: "7", cpu: 9, io1: 130, io2: 160, disk1: 50, disk2: 30 },
-    { name: "8", cpu: 11, io1: 160, io2: 140, disk1: 47, disk2: 22 },
-    { name: "9", cpu: 10, io1: 150, io2: 170, disk1: 52, disk2: 28 },
-  ]
+
+   const [data, setData] = useState([])
+
+  useEffect(() => {
+    getUtilizationData().then(res => {
+      setData(res.data)
+    })
+  }, [])
 
   return (
     <div className="flex flex-col h-full px-6 pt-4 pb-4">

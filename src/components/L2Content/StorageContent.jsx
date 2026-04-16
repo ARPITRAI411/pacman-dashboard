@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+import { getStorageData } from "../../services/api"
 export function StorageContent({ compact }) {
   if (compact) {
     return (
@@ -34,82 +36,42 @@ export function StorageContent({ compact }) {
 }
 
 export function DetailedStorageContent() {
-  const data = [
-    {
-      label: "EBS",
-      value: "1.25PB",
-      width: "30%",
-      bg: "bg-[#e8cfd2]",
-      bar: "bg-[#E91E63]",
-      text: "text-red-400",
-    },
-    {
-      label: "S3",
-      value: "1.5PB",
-      width: "36%",
-      bg: "bg-[#c9d6db]",
-      bar: "bg-[#6fa3b1]",
-      text: "text-blue-400",
-    },
-    {
-      label: "GLACIER",
-      value: "0.75PB",
-      width: "18%",
-      bg: "bg-[#e6dbb5]",
-      bar: "bg-[#d4aa00]",
-      text: "text-yellow-500",
-    },
-    {
-      label: "OTHER",
-      value: "0.65PB",
-      width: "16%",
-      bg: "bg-[#d9dcc4]",
-      bar: "bg-[#9aa300]",
-      text: "text-lime-600",
-    },
-  ]
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    getStorageData().then(res => {
+      setData(res.data)
+    })
+  }, [])
 
   return (
-    <div className="flex flex-col h- px-4">
+    <div className="flex flex-col px-4">
 
-      {/* TOP LABELS */}
-      <div className="flex w-full justify-between text-xs mb-1">
+      {/* LABELS */}
+      <div className="flex justify-between text-xs mb-1">
         {data.map((item, i) => (
-          <span key={i} className={`${item.text} font-medium`}>
-            {item.label}
-          </span>
+          <span key={i}>{item.name}</span>
         ))}
       </div>
 
-      {/* MAIN BLOCK */}
+      {/* BLOCK */}
       <div className="flex w-full h-[250px]">
         {data.map((item, i) => (
           <div
             key={i}
-            className={`relative ${item.bg}`}
-            style={{ width: item.width }}
+            className="bg-gray-200 relative"
+            style={{ width: `${item.percent}%` }}
           >
-            {/* bottom color strip */}
-            <div className={`absolute bottom-0 left-0 w-full h-3 ${item.bar}`} />
+            <div className="absolute bottom-0 left-0 w-full h-3 bg-pink-500" />
           </div>
         ))}
       </div>
 
       {/* VALUES */}
-      <div className="flex justify-between text-sm mt-2 px-1 text-gray-600">
+      <div className="flex justify-between mt-2 text-sm">
         {data.map((item, i) => (
-          <span key={i}>{item.value}</span>
+          <span key={i}>{item.size}PB</span>
         ))}
-      </div>
-
-      {/* BOTTOM TOTAL */}
-      <div className="mt-auto pt-4">
-        <h1 className="text-4xl font-bold text-accent">
-          4.15
-          <span className="text-sm font-medium ml-2">
-            PB In Use
-          </span>
-        </h1>
       </div>
 
     </div>

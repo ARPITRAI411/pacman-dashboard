@@ -9,6 +9,13 @@ import {
   Line,
   
 } from "recharts"
+import { useEffect, useState } from "react"
+import { getCostData } from "../../services/api"
+
+
+
+
+
 export function CostContent({ compact }) {
   if (compact) {
     return (
@@ -37,18 +44,13 @@ export function CostContent({ compact }) {
 }
 
 export function DetailedCostContent() {
-  const data = [
-  { name: "FEB", actual: 900, projected: 600, runRate: 0.45 },
-  { name: "MAR", actual: 700, projected: 300, runRate: 0.25 },
-  { name: "APR", actual: 500, projected: 600, runRate: 0.3 },
-  { name: "MAY", actual: 900, projected: 720, runRate: 0.4 },
-  { name: "JUN", actual: 700, projected: 500, runRate: 0.35 },
-  { name: "JUL", actual: 500, projected: 600, runRate: 0.32 },
-  { name: "AUG", actual: 550, projected: 750, runRate: 0.38 },
-  // { name: "SEP", actual: 300, projected: 900, runRate: 0.28 },
-  // { name: "OCT", actual: 0, projected: 920, runRate: 0.25 },
-  // { name: "NOV", actual: 0, projected: 900, runRate: 0.35 },
-]
+const [data, setData] = useState([])
+
+ useEffect(() => {
+    getCostData().then(res => {
+      setData(res.data)
+    })
+  }, [])
 
   return (
     <div className="flex flex-col h-full px-6 pt-4 pb-6">
@@ -68,7 +70,7 @@ export function DetailedCostContent() {
 
             {/* X AXIS */}
             <XAxis
-              dataKey="name"
+              dataKey="month"
               tick={{ fontSize: 12, fill: "#6b7280" }}
               axisLine={false}
               tickLine={false}
