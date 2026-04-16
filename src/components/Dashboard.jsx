@@ -56,17 +56,25 @@ const routes = {
     defaultContent: <CostContent />,
     activeContent: <DetailedCostContent />,
   },
-  {
-    title: "MONITORING",
-    icon: Activity,
-    defaultContent: <MonitoringContent />,
-    activeContent: <DetailedMonitoringContent />,
-  },
+  
   {
     title: "INVENTORY",
     icon: Cloud,
     defaultContent: <InventoryContent />,
     activeContent: <DetailedInventoryContent />,
+  },
+
+    {
+    title: "COMPLIANCE",
+    icon: Check,
+    defaultContent: <ComplianceContent />,
+    activeContent: <DetailedComplianceContent />,
+  },
+    {
+    title: "MONITORING",
+    icon: Activity,
+    defaultContent: <MonitoringContent />,
+    activeContent: <DetailedMonitoringContent />,
   },
   {
     title: "UTILIZATION",
@@ -74,12 +82,7 @@ const routes = {
     defaultContent: <UtilizationContent />,
     activeContent: <DetailedUtilizationContent />,
   },
-  {
-    title: "COMPLIANCE",
-    icon: Check,
-    defaultContent: <ComplianceContent />,
-    activeContent: <DetailedComplianceContent />,
-  },
+
   {
     title: "STORAGE",
     icon: Database,

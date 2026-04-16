@@ -8,6 +8,9 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts"
+import { useEffect, useState } from "react"
+import { getInventoryData } from "../../services/api"
+
 export function InventoryContent({ compact }) {
   if (compact) {
     return (
@@ -72,14 +75,15 @@ export function DetailedInventoryContent({ compact }) {
       </div>
     )
   }
+const [data, setData] = useState([])
 
-  const data = [
-    { name: "AUG 02", max: 400, mid: 320, min: 250 },
-    { name: "AUG 03", max: 700, mid: 550, min: 240 },
-    { name: "AUG 04", max: 1000, mid: 780, min: 260 },
-    { name: "AUG 05", max: 500, mid: 450, min: 240 },
-    { name: "AUG 06", max: 700, mid: 480, min: 280 },
-  ]
+  useEffect(() => {
+    getInventoryData().then(res => {
+      setData(res.data)
+    })
+  }, [])
+
+
 
   return (
     <div className="flex flex-col h-full px-3">
@@ -100,7 +104,7 @@ export function DetailedInventoryContent({ compact }) {
 
             {/* X AXIS */}
             <XAxis
-              dataKey="name"
+              dataKey="date"
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: "#6b7280" }}

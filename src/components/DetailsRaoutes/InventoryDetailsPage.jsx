@@ -2,19 +2,20 @@ import { Filter, X, Search } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { DetailedInventoryContent } from "../L2Content/InventoryContent"
 import { SubHeader } from "../SubHeader"
+import { useEffect, useState } from "react"
+import { getInventoryData } from "../../services/api"
 
 export default function InventoryDetailsPage() {
   const navigate = useNavigate()
 
-  const tableData = Array.from({ length: 12 }, (_, i) => ({
-  label1: `Data R${i + 1}C1`,
-  number: i + 1,
-  date: `0${i + 1}/08/16`,
-  label4: `Data R${i + 1}C4`,
-  label5: `Data R${i + 1}C5`,
-  label6: `Data R${i + 1}C6`,
-  label7: `Data R${i + 1}C7`,
-}))
+  const [tableData, setTableData] = useState([])
+
+useEffect(() => {
+  getInventoryData().then(res => {
+    setTableData(res.data)
+  })
+}, [])
+ 
 
   return (
     <div className="min-h-screen w-[99%]  ">
@@ -83,35 +84,30 @@ export default function InventoryDetailsPage() {
 </div>
 
 {/* 📋 TABLE */}
-<div className="overflow-hidden border-t">
-  <table className="w-full text-sm">
-    <thead className="text-left border-b">
-      <tr>
-        <th className="py-2">Label 1</th>
-        <th>Number</th>
-        <th>Date</th>
-        <th>Label 4</th>
-        <th>Label 5</th>
-        <th>Label 6</th>
-        <th>Label 7</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {tableData.map((row, i) => (
-        <tr key={i} className={`${i % 2 === 1 ? "bg-gray-100" : ""}`}>
-          <td className="py-2">{row.label1}</td>
-          <td>{row.number}</td>
-          <td>{row.date}</td>
-          <td>{row.label4}</td>
-          <td>{row.label5}</td>
-          <td>{row.label6}</td>
-          <td>{row.label7}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+<thead>
+  <tr>
+    <th>Date</th>
+    <th>Max</th>
+    <th>Mid</th>
+    <th>Min</th>
+    <th>Label 5</th>
+    <th>Label 6</th>
+    <th>Label 7</th>
+  </tr>
+</thead>
+<tbody>
+  {tableData.map((row, i) => (
+    <tr key={i} className={i % 2 === 1 ? "bg-gray-100" : ""}>
+      <td className="py-2">{row.date}</td>
+      <td>{row.max}</td>
+      <td>{row.mid}</td>
+      <td>{row.min}</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+  ))}
+</tbody>
 
       </div>
     </div>
